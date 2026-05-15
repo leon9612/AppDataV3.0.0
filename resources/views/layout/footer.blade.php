@@ -33,6 +33,7 @@
     <script src="{{asset('assets/js/main.js')}}"></script>
     <script src="{{ asset('assets/data/restric.js') }}?v={{ time() }}"></script>
     <script src="{{ asset('assets/data/eventos.js') }}?v={{ time() }}"></script>
+    <script src="{{ asset('assets/data/valid.js') }}?v={{ time() }}"></script>
     
     <script>
         // Mejora de interacción del menú

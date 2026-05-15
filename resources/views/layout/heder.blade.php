@@ -13,7 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    
+
     <style>
         * {
             margin: 0;
@@ -44,7 +44,7 @@
             transition: left 0.3s ease;
             z-index: 9999;
             overflow-y: auto;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
         }
 
         #header.menu-abierto {
@@ -68,7 +68,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .mobile-nav-toggle:hover {
@@ -83,7 +83,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 9998;
         }
 
@@ -95,7 +95,7 @@
         .profile {
             text-align: center;
             padding: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .profile img {
@@ -180,7 +180,7 @@
 
         .nav-content {
             display: none;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0, 0, 0, 0.2);
             padding: 5px 0;
         }
 
@@ -195,7 +195,7 @@
 
         .menu-badge {
             margin-left: 10px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             color: white;
             font-size: 10px;
             padding: 2px 6px;
@@ -205,7 +205,7 @@
         /* Botón cerrar sesión */
         .mt-3 {
             margin-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 10px;
         }
 
@@ -219,19 +219,34 @@
             #header {
                 left: 0;
             }
-            
+
             .mobile-nav-toggle {
                 display: none;
             }
-            
+
             main {
                 margin-left: 300px;
             }
         }
 
         .hidden-menu-item {
-    display: none !important;
-}
+            display: none !important;
+        }
+
+        /* Estilos para campos fuera de rango */
+        .fuera-rango {
+            background-color: #f8d7da !important;
+            border: 2px solid #dc3545 !important;
+            color: #721c24 !important;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+        }
+
+        /* Estilos para campos dentro de rango */
+        .dentro-rango {
+            background-color: #d4edda !important;
+            border: 2px solid #28a745 !important;
+            color: #155724 !important;
+        }
     </style>
 </head>
 
@@ -387,12 +402,12 @@
             const header = document.getElementById('header');
             const menuToggle = document.getElementById('menuToggle');
             const menuOverlay = document.getElementById('menuOverlay');
-            
+
             // Abrir/cerrar menú
             menuToggle.addEventListener('click', function() {
                 header.classList.toggle('menu-abierto');
                 menuOverlay.classList.toggle('active');
-                
+
                 // Cambiar ícono
                 const icon = this.querySelector('i');
                 if (header.classList.contains('menu-abierto')) {
@@ -401,14 +416,14 @@
                     icon.className = 'bi bi-list';
                 }
             });
-            
+
             // Cerrar menú al hacer clic en overlay
             menuOverlay.addEventListener('click', function() {
                 header.classList.remove('menu-abierto');
                 menuOverlay.classList.remove('active');
                 menuToggle.querySelector('i').className = 'bi bi-list';
             });
-            
+
             // Cerrar menú al hacer clic en enlaces (solo en móvil)
             const navLinks = document.querySelectorAll('.nav-menu a[href]');
             navLinks.forEach(link => {
@@ -420,12 +435,12 @@
                     }
                 });
             });
-            
+
             // Manejar submenús en todos los tamaños de pantalla
             window.toggleSubmenu = function(id) {
                 const submenu = document.getElementById(id);
                 const parentItem = submenu.closest('.nav-item');
-                
+
                 if (submenu.style.display === 'block') {
                     submenu.style.display = 'none';
                     parentItem.classList.remove('abierto');
@@ -434,7 +449,7 @@
                     parentItem.classList.add('abierto');
                 }
             };
-            
+
             // Si hay un submenú abierto al cargar la página
             const activeSubmenus = document.querySelectorAll('.nav-content[style="display: block;"]');
             activeSubmenus.forEach(submenu => {
@@ -446,4 +461,5 @@
         });
     </script>
 </body>
+
 </html>

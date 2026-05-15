@@ -481,6 +481,16 @@
         document.getElementById("btn-guardar").disabled = true; // Deshabilitar el botón al cargar la página
     });
 
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cargar el tiempo guardado en el input
+        const tiempoInput = document.getElementById('tiempoPrueba');
+        if (tiempoInput) {
+            const tiempoGuardado = getTiempoPrueba();
+            tiempoInput.value = tiempoGuardado;
+            // console.log(`📌 Vista: ${document.querySelector('.section-title h2')?.textContent}, Tiempo cargado: ${tiempoGuardado} minutos`);
+        }
+    });
+
     $(".selPlaca").change(function(e) {
         e.preventDefault();
         var placa = $('.selPlaca option:selected').attr('value');
@@ -602,85 +612,9 @@
         console.log(binary);
     }
 
-    
-
-    // Configuración del tiempo (en segundos) - puedes modificar este valor
-    const TIEMPO_PRUEBA = 60; // 5 minutos = 300 segundos
-
-    // Función para iniciar el contador regresivo
-    function iniciarContadorRegresivo() {
-        let tiempoRestante = TIEMPO_PRUEBA;
-        let intervalo;
-
-        // Crear o actualizar el elemento del contador
-        let contadorElemento = $("#contador-regresivo");
-        if (contadorElemento.length === 0) {
-            $("body").append(`
-            <div id="contador-regresivo" style="
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #f8f9fa;
-                border: 2px solid #007bff;
-                border-radius: 10px;
-                padding: 15px;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                z-index: 1000;
-                text-align: center;
-                min-width: 150px;
-            ">
-                <h4 style="margin: 0 0 10px 0; color: #007bff;">Tiempo Restante</h4>
-                <div id="tiempo-display" style="font-size: 24px; font-weight: bold; color: #dc3545;">
-                    ${formatearTiempo(tiempoRestante)}
-                </div>
-                
-            </div>
-        `);
-        }
-
-        // Mostrar el contador
-        $("#contador-regresivo").show();
-
-        // Función para actualizar el contador
-        function actualizarContador() {
-            tiempoRestante--;
-
-            // Actualizar display
-            $("#tiempo-display").text(formatearTiempo(tiempoRestante));
-
-            // Cambiar color según el tiempo
-            if (tiempoRestante <= 60) {
-                $("#tiempo-display").css("color", "#dc3545"); // Rojo
-            } else if (tiempoRestante <= 120) {
-                $("#tiempo-display").css("color", "#ffc107"); // Amarillo
-            }
-
-            // Cuando el tiempo se acaba
-            if (tiempoRestante <= 0) {
-                clearInterval(intervalo);
-                $("#tiempo-display").text("00:00");
-
-                // Mostrar alerta
-                Toast.fire({
-                    icon: "warning",
-                    title: "¡Tiempo agotado! Envíe la prueba ahora.",
-                    position: "bottom-end"
-                });
-            }
-        }
-
-        // Iniciar el intervalo
-        intervalo = setInterval(actualizarContador, 1000);
 
 
-    }
 
-    // Función para formatear el tiempo (segundos a MM:SS)
-    function formatearTiempo(segundos) {
-        const minutos = Math.floor(segundos / 60);
-        const segundosRestantes = segundos % 60;
-        return `${minutos.toString().padStart(2, '0')}:${segundosRestantes.toString().padStart(2, '0')}`;
-    }
 
     $("#btn-buscar-placa").click(function(e) {
         e.preventDefault();
@@ -721,22 +655,41 @@
                                     timeout: 100000
                                 });
                             }
-                            if (res.observacion == 'baja_izquierda')
+                            res.valor = res.valor.replace(",", ".");
+                            // console.log(res.observacion + " " + res.valor)
+                            if (res.observacion == 'baja_izquierda') {
                                 $("#baja_izquierda").val(res.valor);
-                            if (res.observacion == 'inclinacion_izquierda')
+                                validarRango(res.valor, 'luces', 'baja_izquierda');
+                            }
+                            if (res.observacion == 'inclinacion_izquierda') {
                                 $("#incli_izquierda").val(res.valor);
-                            if (res.observacion == 'alta_izquierda')
+                                validarRango(res.valor, 'luces', 'incli_izquierda');
+                            }
+                            if (res.observacion == 'alta_izquierda') {
                                 $("#alta_izquierda").val(res.valor);
-                            if (res.observacion == 'baja_derecha')
+                                validarRango(res.valor, 'luces', 'alta_izquierda');
+                            }
+                            if (res.observacion == 'baja_derecha') {
                                 $("#baja_derecha").val(res.valor);
-                            if (res.observacion == 'inclinacion_derecha')
+                                validarRango(res.valor, 'luces', 'baja_derecha');
+                            }
+
+                            if (res.observacion == 'inclinacion_derecha') {
                                 $("#incli_derecha").val(res.valor);
-                            if (res.observacion == 'alta_derecha')
+                                validarRango(res.valor, 'luces', 'incli_derecha');
+                            }
+                            if (res.observacion == 'alta_derecha') {
                                 $("#alta_derecha").val(res.valor);
-                            if (res.observacion == 'antis_derecha')
+                                validarRango(res.valor, 'luces', 'alta_derecha');
+                            }
+                            if (res.observacion == 'antis_derecha') {
                                 $("#anti_derecha").val(res.valor);
-                            if (res.observacion == 'antis_izquierda')
+                                validarRango(res.valor, 'luces', 'anti_derecha');
+                            }
+                            if (res.observacion == 'antis_izquierda') {
                                 $("#anti_izquierda").val(res.valor);
+                                validarRango(res.valor, 'luces', 'anti_izquierda');
+                            }
 
 
 
@@ -760,4 +713,10 @@
             });
         }
     })
-</script>
+
+    $(document).on('keyup', '#baja_izquierda, #baja_derecha, #incli_izquierda, #incli_derecha, #baja_izquierda_1, #baja_derecha_1, #incli_derecha_1, #incli_izquierda_1', function() {
+        const valor = $(this).val();
+        const idCampo = $(this).attr('id');
+        validarRango(valor, 'luces', idCampo);
+    });
+</script>''

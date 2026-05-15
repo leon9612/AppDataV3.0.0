@@ -35,7 +35,7 @@
                             <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
                                 <div class="input-group mb-3" style="align-content: center">
                                     <div class="form-floating mb-3">
-                                        <input type="number" class="form-control" step="0.01" id="floatingInput"
+                                        <input type="number" class="form-control" step="0.01"
                                             name="valson" id="valson" placeholder="1" value="{{ old('valson') }}">
                                         <label for="floatingInput">Valor</label>
                                         @if ($errors->has('valson'))
@@ -81,6 +81,16 @@
         document.getElementById("btn-guardar").disabled = true; // Deshabilitar el botón al cargar la página
     });
 
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cargar el tiempo guardado en el input
+        const tiempoInput = document.getElementById('tiempoPrueba');
+        if (tiempoInput) {
+            const tiempoGuardado = getTiempoPrueba();
+            tiempoInput.value = tiempoGuardado;
+            // console.log(`📌 Vista: ${document.querySelector('.section-title h2')?.textContent}, Tiempo cargado: ${tiempoGuardado} minutos`);
+        }
+    });
+
     $(".selPlaca").change(function(e) {
         e.preventDefault();
         var placa = $('.selPlaca option:selected').attr('value');
@@ -91,5 +101,11 @@
         console.log(placa2);
 
     });
-    
+
+
+    $(document).on('keyup', '#valson', function() {
+        const valor = $(this).val();
+        const idCampo = $(this).attr('id');
+        validarRango(valor, 'sonometro', idCampo);
+    });
 </script>

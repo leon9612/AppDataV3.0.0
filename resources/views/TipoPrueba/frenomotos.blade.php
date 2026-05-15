@@ -155,6 +155,16 @@
         document.getElementById("btn-guardar").disabled = true;
     });
 
+      document.addEventListener('DOMContentLoaded', function() {
+        // Cargar el tiempo guardado en el input
+        const tiempoInput = document.getElementById('tiempoPrueba');
+        if (tiempoInput) {
+            const tiempoGuardado = getTiempoPrueba();
+            tiempoInput.value = tiempoGuardado;
+            // console.log(`📌 Vista: ${document.querySelector('.section-title h2')?.textContent}, Tiempo cargado: ${tiempoGuardado} minutos`);
+        }
+    });
+
     const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
@@ -289,6 +299,7 @@
         eficatotal = ((eficatotal * 100) / 100);
         $("#efitotal").val(eficatotal.toFixed(2));
         $("#efitotal_").val(eficatotal.toFixed(2));
+         validarRango(eficatotal.toFixed(2), 'frenosmotos', 'efitotal')
         // var efiaux = ((auxiliar / peso) * 100).toString();
         // efiaux = efiaux.substring(0, 3);
         // $("#efiaux").val(efiaux);
@@ -350,83 +361,7 @@
 
     // });
 
-    // Configuración del tiempo (en segundos) - puedes modificar este valor
-    const TIEMPO_PRUEBA = 80; // 5 minutos = 300 segundos
-
-    // Función para iniciar el contador regresivo
-    function iniciarContadorRegresivo() {
-        let tiempoRestante = TIEMPO_PRUEBA;
-        let intervalo;
-
-        // Crear o actualizar el elemento del contador
-        let contadorElemento = $("#contador-regresivo");
-        if (contadorElemento.length === 0) {
-            $("body").append(`
-            <div id="contador-regresivo" style="
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #f8f9fa;
-                border: 2px solid #007bff;
-                border-radius: 10px;
-                padding: 15px;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                z-index: 1000;
-                text-align: center;
-                min-width: 150px;
-            ">
-                <h4 style="margin: 0 0 10px 0; color: #007bff;">Tiempo Restante</h4>
-                <div id="tiempo-display" style="font-size: 24px; font-weight: bold; color: #dc3545;">
-                    ${formatearTiempo(tiempoRestante)}
-                </div>
-                
-            </div>
-        `);
-        }
-
-        // Mostrar el contador
-        $("#contador-regresivo").show();
-
-        // Función para actualizar el contador
-        function actualizarContador() {
-            tiempoRestante--;
-
-            // Actualizar display
-            $("#tiempo-display").text(formatearTiempo(tiempoRestante));
-
-            // Cambiar color según el tiempo
-            if (tiempoRestante <= 60) {
-                $("#tiempo-display").css("color", "#dc3545"); // Rojo
-            } else if (tiempoRestante <= 120) {
-                $("#tiempo-display").css("color", "#ffc107"); // Amarillo
-            }
-
-            // Cuando el tiempo se acaba
-            if (tiempoRestante <= 0) {
-                clearInterval(intervalo);
-                $("#tiempo-display").text("00:00");
-
-                // Mostrar alerta
-                Toast.fire({
-                    icon: "warning",
-                    title: "¡Tiempo agotado! Envíe la prueba ahora.",
-                    position: "bottom-end"
-                });
-            }
-        }
-
-        // Iniciar el intervalo
-        intervalo = setInterval(actualizarContador, 1000);
-
-
-    }
-
-    // Función para formatear el tiempo (segundos a MM:SS)
-    function formatearTiempo(segundos) {
-        const minutos = Math.floor(segundos / 60);
-        const segundosRestantes = segundos % 60;
-        return `${minutos.toString().padStart(2, '0')}:${segundosRestantes.toString().padStart(2, '0')}`;
-    }
+    
 
     $("#btn-buscar-placa").click(function(e) {
         e.preventDefault();

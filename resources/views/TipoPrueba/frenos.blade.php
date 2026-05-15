@@ -399,6 +399,16 @@
         }
     });
 
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cargar el tiempo guardado en el input
+        const tiempoInput = document.getElementById('tiempoPrueba');
+        if (tiempoInput) {
+            const tiempoGuardado = getTiempoPrueba();
+            tiempoInput.value = tiempoGuardado;
+            // console.log(`📌 Vista: ${document.querySelector('.section-title h2')?.textContent}, Tiempo cargado: ${tiempoGuardado} minutos`);
+        }
+    });
+
     // $(document).ready(function() {
     //     document.getElementById("btn-guardar").disabled = true; // Deshabilitar el botón al cargar la página
     // })
@@ -442,6 +452,7 @@
             //                            console.log(des1f)
             $("#deseje1").val(des1f.toFixed(2))
             $("#deseje1_").val(des1f.toFixed(2))
+            validarRango(des1f.toFixed(2), 'frenos', 'deseje1')
         } else {
             var des1f = parseFloat($("#fuerza1i").val()) - parseFloat($("#fuerza1d").val())
             des1f = ((des1f / parseFloat($("#fuerza1i").val())) * 100)
@@ -450,6 +461,7 @@
             //                            console.log(des1f)
             $("#deseje1").val(des1f.toFixed(2))
             $("#deseje1_").val(des1f.toFixed(2))
+            validarRango(des1f.toFixed(2), 'frenos', 'deseje1')
             //$("#deseje1").val(parseFloat($("#fuerza1i").val()) - parseFloat($("#fuerza1d").val()) * 100) 
         }
 
@@ -458,6 +470,7 @@
             des2f = ((des2f / parseFloat($("#fuerza2d").val())) * 100);
             $("#deseje2").val(des2f.toFixed(2))
             $("#deseje2_").val(des2f.toFixed(2))
+            validarRango(des2f.toFixed(2), 'frenos', 'deseje2')
         } else {
             var des2f = parseFloat($("#fuerza2i").val()) - parseFloat($("#fuerza2d").val())
             des2f = ((des2f / parseFloat($("#fuerza2i").val())) * 100);
@@ -465,6 +478,7 @@
             //.log(des2f)
             $("#deseje2").val(des2f.toFixed(2))
             $("#deseje2_").val(des2f.toFixed(2))
+            validarRango(des2f.toFixed(2), 'frenos', 'deseje2')
 
         }
         if ($("#fuerza3d").val() !== "" || $("#fuerza3i").val() !== "") {
@@ -476,6 +490,7 @@
                 //                                des2f = Math.round((des2f * 100) / 100)
                 $("#deseje3").val(des2f.toFixed(2))
                 $("#deseje3_").val(des2f.toFixed(2))
+                validarRango(des2f.toFixed(2), 'frenos', 'deseje3')
             } else {
                 var des2f = parseFloat($("#fuerza3i").val()) - parseFloat($("#fuerza3d").val())
                 des2f = ((des2f / parseFloat($("#fuerza3i").val())) * 100);
@@ -483,6 +498,7 @@
                 //                                console.log(des2f)
                 $("#deseje3").val(des2f.toFixed(2))
                 $("#deseje3_").val(des2f.toFixed(2))
+                validarRango(des2f.toFixed(2), 'frenos', 'deseje3')
 
             }
         }
@@ -496,6 +512,7 @@
                 //                                console.log(des2f)
                 $("#deseje4").val(des2f.toFixed(2))
                 $("#deseje4_").val(des2f.toFixed(2))
+                validarRango(des2f.toFixed(2), 'frenos', 'deseje4')
             } else {
                 var des2f = parseFloat($("#fuerza4i").val()) - parseFloat($("#fuerza4d").val())
                 des2f = ((des2f / parseFloat($("#fuerza4i").val())) * 100)
@@ -503,6 +520,7 @@
                 //                                console.log(des2f)
                 $("#deseje4").val(des2f.toFixed(2))
                 $("#deseje4_").val(des2f.toFixed(2))
+                validarRango(des2f.toFixed(2), 'frenos', 'deseje4')
 
             }
         }
@@ -517,6 +535,7 @@
                 //                                console.log(des2f)
                 $("#deseje5").val(des2f.toFixed(2))
                 $("#deseje5_").val(des2f.toFixed(2))
+                validarRango(des2f.toFixed(2), 'frenos', 'deseje5')
             } else {
                 var des2f = parseFloat($("#fuerza5i").val()) - parseFloat($("#fuerza5d").val())
                 des2f = ((des2f / parseFloat($("#fuerza5i").val())) * 100)
@@ -525,6 +544,7 @@
                 //                                console.log(des2f)
                 $("#deseje5").val(des2f.toFixed(2))
                 $("#deseje5_").val(des2f.toFixed(2))
+                validarRango(des2f.toFixed(2), 'frenos', 'deseje5')
 
             }
         }
@@ -534,145 +554,16 @@
         eficatotal = ((eficatotal * 100) / 100);
         $("#efitotal").val(eficatotal.toFixed(2));
         $("#efitotal_").val(eficatotal.toFixed(2));
+        validarRango(eficatotal.toFixed(2), 'frenos', 'efitotal')
         var efiaux = ((auxiliar / peso) * 100)
         //                        efiaux = efiaux.substring(0, 3);
         efiaux = ((efiaux * 100) / 100);
         $("#efiaux").val(efiaux.toFixed(2));
         $("#efiaux_").val(efiaux.toFixed(2));
+        validarRango(efiaux.toFixed(2), 'frenos', 'efiaux')
     })
 
-    // $("#btn-evento").click(function(ev) {
-    //     ev.preventDefault();
-    //     document.getElementById("btn-evento").disabled = true;
-    //     if ($(".Vplaca").val() == null || $(".Vplaca").val() == "") {
-    //         Toast.fire({
-    //             icon: "error",
-    //             title: "Seleccione una placa",
-    //             position: "bottom-end"
-    //         });
-    //         document.getElementById("btn-evento").disabled = false;
-    //     } else {
-    //         Toast.fire({
-    //             icon: "info",
-    //             title: "Creando evento...",
-    //             timeout: 500,
-    //             position: "bottom-end"
-    //         });
-    //         $.ajax({
-    //             url: 'getevento/',
-    //             type: 'post',
-    //             dataType: 'json',
-    //             data: {
-    //                 placa: $(".Vplaca").val(),
-    //                 prueba: 'Frenos',
-    //                 tipoprueba: '7',
-    //                 tipovehiculo: '1',
-    //                 tipoevento: '1',
-    //                 _token: $("input[name='_token']").val()
-    //             },
-    //             success: function(data, textStatus, jqXHR) {
-    //                 document.getElementById("btn-evento").disabled = false;
-    //                 // document.getElementById("btn-guardar").disabled = false;
-    //                 Swal.close();
-    //                 Toast.fire({
-    //                     icon: "success",
-    //                     title: "Evento creado, tenga en cuenta el tiempo de duracion de la prueba, para enviar los datos.",
-    //                     timeout: 1000,
-    //                     position: "bottom-end"
-    //                 });
-
-    //                 // Luego mostrar el toast con un pequeño delay
-    //                 iniciarContadorRegresivo();
-
-    //             },
-    //             error: function(jqXHR, textStatus, errorThrown) {
-    //                 console.log('error')
-    //                 console.log(jqXHR.responseText)
-    //                 console.log(textStatus)
-    //                 console.log(errorThrown)
-    //             }
-    //         });
-    //     }
-
-    // });
-
-    // Configuración del tiempo (en segundos) - puedes modificar este valor
-    const TIEMPO_PRUEBA = 80; // 5 minutos = 300 segundos
-
-    // Función para iniciar el contador regresivo
-    function iniciarContadorRegresivo() {
-        let tiempoRestante = TIEMPO_PRUEBA;
-        let intervalo;
-
-        // Crear o actualizar el elemento del contador
-        let contadorElemento = $("#contador-regresivo");
-        if (contadorElemento.length === 0) {
-            $("body").append(`
-            <div id="contador-regresivo" style="
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #f8f9fa;
-                border: 2px solid #007bff;
-                border-radius: 10px;
-                padding: 15px;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                z-index: 1000;
-                text-align: center;
-                min-width: 150px;
-            ">
-                <h4 style="margin: 0 0 10px 0; color: #007bff;">Tiempo Restante</h4>
-                <div id="tiempo-display" style="font-size: 24px; font-weight: bold; color: #dc3545;">
-                    ${formatearTiempo(tiempoRestante)}
-                </div>
-                
-            </div>
-        `);
-        }
-
-        // Mostrar el contador
-        $("#contador-regresivo").show();
-
-        // Función para actualizar el contador
-        function actualizarContador() {
-            tiempoRestante--;
-
-            // Actualizar display
-            $("#tiempo-display").text(formatearTiempo(tiempoRestante));
-
-            // Cambiar color según el tiempo
-            if (tiempoRestante <= 60) {
-                $("#tiempo-display").css("color", "#dc3545"); // Rojo
-            } else if (tiempoRestante <= 120) {
-                $("#tiempo-display").css("color", "#ffc107"); // Amarillo
-            }
-
-            // Cuando el tiempo se acaba
-            if (tiempoRestante <= 0) {
-                clearInterval(intervalo);
-                $("#tiempo-display").text("00:00");
-
-                // Mostrar alerta
-                Toast.fire({
-                    icon: "warning",
-                    title: "¡Tiempo agotado! Envíe la prueba ahora.",
-                    position: "bottom-end"
-                });
-            }
-        }
-
-        // Iniciar el intervalo
-        intervalo = setInterval(actualizarContador, 1000);
-
-
-    }
-
-    // Función para formatear el tiempo (segundos a MM:SS)
-    function formatearTiempo(segundos) {
-        const minutos = Math.floor(segundos / 60);
-        const segundosRestantes = segundos % 60;
-        return `${minutos.toString().padStart(2, '0')}:${segundosRestantes.toString().padStart(2, '0')}`;
-    }
+    
 
 
     $("#btn-buscar-placa").click(function(e) {
@@ -809,4 +700,3 @@
         }
     })
 </script>
-

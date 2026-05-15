@@ -348,6 +348,16 @@
         console.log(document.getElementById("btn-guardar"))
     });
 
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cargar el tiempo guardado en el input
+        const tiempoInput = document.getElementById('tiempoPrueba');
+        if (tiempoInput) {
+            const tiempoGuardado = getTiempoPrueba();
+            tiempoInput.value = tiempoGuardado;
+            // console.log(`📌 Vista: ${document.querySelector('.section-title h2')?.textContent}, Tiempo cargado: ${tiempoGuardado} minutos`);
+        }
+    });
+
 
 
 
@@ -838,45 +848,7 @@
     }
 
 
-    // $("#btn-evento").click(function(ev) {
-    //     ev.preventDefault();
-    //     if ($(".Vplaca").val() == null || $(".Vplaca").val() == "") {
-    //         Toast.fire({
-    //             icon: "error",
-    //             title: "Seleccione una placa"
-    //         });
-    //     } else {
-    //         $.ajax({
-    //             url: 'getevento/',
-    //             type: 'post',
-    //             dataType: 'json',
-    //             data: {
-    //                 placa: $(".Vplaca").val(),
-    //                 prueba: 'Visual',
-    //                 tipoprueba: '8',
-    //                 tipovehiculo: '1',
-    //                 tipoevento: '1',
-    //                 _token: $("input[name='_token']").val()
-    //             },
-    //             success: function(data, textStatus, jqXHR) {
-    //                 document.getElementById("btn-guardar-visual").disabled = false;
-    //                 Swal.close();
-    //                 Toast.fire({
-    //                     icon: "success",
-    //                     title: "Evento creado, tenga en cuenta el tiempo de duracion de la prueba, para enviar los datos."
-    //                 });
-
-    //             },
-    //             error: function(jqXHR, textStatus, errorThrown) {
-    //                 console.log('error')
-    //                 console.log(jqXHR.responseText)
-    //                 console.log(textStatus)
-    //                 console.log(errorThrown)
-    //             }
-    //         });
-    //     }
-
-    // });
+    
 
     $("#btn-buscar-placa").click(function(e) {
         e.preventDefault();

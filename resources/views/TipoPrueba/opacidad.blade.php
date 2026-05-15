@@ -41,80 +41,80 @@
                             </div>
                         </div>
                         <div class="row">
-    <!-- Bloque DATOS TH -->
-    <div class="col-12 col-lg-6">
-        <div class="container" style="justify-content: center; display: flex">
-            <div class="row w-100">
-                <label style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; width: 100%; margin-top: 15px; background-color: lightgoldenrodyellow">
-                    DATOS TH
-                </label>
-                <div style="justify-content: center; display: flex; margin-top: 15px">
-                    <div class="col-sm-12 col-md-6" style="align-content: center">
-                        <div class="input-group mb-3" style="align-content: center">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="tempAmbiente" id="tempAmbiente" placeholder="1"
-                                    value="{{ old('tempAmbiente', $tempAmbiente ?? '') }}">
-                                <label for="floatingInput">Temperatura</label>
-                                @if ($errors->has('tempAmbiente'))
-                                <span class="error text-danger">{{ $errors->first('tempAmbiente') }}</span>
-                                @endif
+                            <!-- Bloque DATOS TH -->
+                            <div class="col-12 col-lg-6">
+                                <div class="container" style="justify-content: center; display: flex">
+                                    <div class="row w-100">
+                                        <label style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; width: 100%; margin-top: 15px; background-color: lightgoldenrodyellow">
+                                            DATOS TH
+                                        </label>
+                                        <div style="justify-content: center; display: flex; margin-top: 15px">
+                                            <div class="col-sm-12 col-md-6" style="align-content: center">
+                                                <div class="input-group mb-3" style="align-content: center">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" name="tempAmbiente" id="tempAmbiente" placeholder="1"
+                                                            value="{{ old('tempAmbiente', $tempAmbiente ?? '') }}">
+                                                        <label for="floatingInput">Temperatura</label>
+                                                        @if ($errors->has('tempAmbiente'))
+                                                        <span class="error text-danger">{{ $errors->first('tempAmbiente') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6" style="align-content: center">
+                                                <div class="input-group mb-3" style="align-content: center">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" step="0.01" name="humedad" id="humedad" placeholder="1"
+                                                            value="{{ old('humedad', $humedad ?? '') }}">
+                                                        <label for="floatingInput">Humedad</label>
+                                                        @if ($errors->has('humedad'))
+                                                        <span class="error text-danger">{{ $errors->first('humedad') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6" style="align-content: center">
-                        <div class="input-group mb-3" style="align-content: center">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" step="0.01" name="humedad" id="humedad" placeholder="1"
-                                    value="{{ old('humedad', $humedad ?? '') }}">
-                                <label for="floatingInput">Humedad</label>
-                                @if ($errors->has('humedad'))
-                                <span class="error text-danger">{{ $errors->first('humedad') }}</span>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Bloque DATOS DE TEMPERATURA -->
-    <div class="col-12 col-lg-6">
-        <div class="container" style="justify-content: center; display: flex">
-            <div class="row w-100">
-                <label style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; width: 100%; margin-top: 15px; background-color: lightgoldenrodyellow">
-                    TEMPERATURA MOTOR
-                </label>
-                <div style="justify-content: center; display: flex; margin-top: 15px; gap: 15px; flex-wrap: wrap;">
-                    <div class="col-sm-12 col-md-5" style="align-content: center">
-                        <div class="input-group mb-3" style="align-content: center">
-                            <div class="form-floating mb-3">
-                                <input type="number" class="form-control" step="0.01" name="tmpinicial" id="tmpinicial" placeholder="1"
-                                    value="{{ old('tmpinicial', $tmpinicial ?? '') }}">
-                                <label for="floatingInput">Temp Inicial</label>
-                                @if ($errors->has('tmpinicial'))
-                                <span class="error text-danger">{{ $errors->first('tmpinicial') }}</span>
-                                @endif
+                            <!-- Bloque DATOS DE TEMPERATURA -->
+                            <div class="col-12 col-lg-6">
+                                <div class="container" style="justify-content: center; display: flex">
+                                    <div class="row w-100">
+                                        <label style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; width: 100%; margin-top: 15px; background-color: lightgoldenrodyellow">
+                                            TEMPERATURA MOTOR
+                                        </label>
+                                        <div style="justify-content: center; display: flex; margin-top: 15px; gap: 15px; flex-wrap: wrap;">
+                                            <div class="col-sm-12 col-md-5" style="align-content: center">
+                                                <div class="input-group mb-3" style="align-content: center">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="number" class="form-control" step="0.01" name="tmpinicial" id="tmpinicial" placeholder="1"
+                                                            value="{{ old('tmpinicial', $tmpinicial ?? '') }}">
+                                                        <label for="floatingInput">Temp Inicial</label>
+                                                        @if ($errors->has('tmpinicial'))
+                                                        <span class="error text-danger">{{ $errors->first('tmpinicial') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-5" style="align-content: center">
+                                                <div class="input-group mb-3" style="align-content: center">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="number" class="form-control" step="0.01" name="tmpfinal" id="tmpfinal" placeholder="1"
+                                                            value="{{ old('tmpfinal', $tmpfinal ?? '') }}">
+                                                        <label for="floatingInput">Temp Final</label>
+                                                        @if ($errors->has('tmpfinal'))
+                                                        <span class="error text-danger">{{ $errors->first('tmpfinal') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-12 col-md-5" style="align-content: center">
-                        <div class="input-group mb-3" style="align-content: center">
-                            <div class="form-floating mb-3">
-                                <input type="number" class="form-control" step="0.01" name="tmpfinal" id="tmpfinal" placeholder="1"
-                                    value="{{ old('tmpfinal', $tmpfinal ?? '') }}">
-                                <label for="floatingInput">Temp Final</label>
-                                @if ($errors->has('tmpfinal'))
-                                <span class="error text-danger">{{ $errors->first('tmpfinal') }}</span>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
                         <div class="container" style="justify-content: center; display: flex ">
                             <div class="row">
                                 <label
@@ -265,7 +265,7 @@
 
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div class="row">
@@ -317,6 +317,16 @@
 
     })
 
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cargar el tiempo guardado en el input
+        const tiempoInput = document.getElementById('tiempoPrueba');
+        if (tiempoInput) {
+            const tiempoGuardado = getTiempoPrueba();
+            tiempoInput.value = tiempoGuardado;
+            // console.log(`📌 Vista: ${document.querySelector('.section-title h2')?.textContent}, Tiempo cargado: ${tiempoGuardado} minutos`);
+        }
+    });
+
 
 
 
@@ -353,6 +363,8 @@
         $("#opa3k").val(Number.parseFloat(-(1 / ln) * Math.log((1 - (opa3 / 100)))).toFixed(2));
         $("#opa4k").val(Number.parseFloat(-(1 / ln) * Math.log((1 - (opa4 / 100)))).toFixed(2));
 
+        $("#opa1k, #opa2k, #opa3k, #opa4k").trigger('change');
+
         // Evaluar diferencia aritmética con los valores convertidos (opa2k, opa3k, opa4k)
         var valor2k = parseFloat($("#opa2k").val()) || 0;
         var valor3k = parseFloat($("#opa3k").val()) || 0;
@@ -388,85 +400,9 @@
 
 
 
-    
-
-    // Configuración del tiempo (en segundos) - puedes modificar este valor
-    const TIEMPO_PRUEBA = 150; // 5 minutos = 300 segundos
-
-    // Función para iniciar el contador regresivo
-    function iniciarContadorRegresivo() {
-        let tiempoRestante = TIEMPO_PRUEBA;
-        let intervalo;
-
-        // Crear o actualizar el elemento del contador
-        let contadorElemento = $("#contador-regresivo");
-        if (contadorElemento.length === 0) {
-            $("body").append(`
-            <div id="contador-regresivo" style="
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #f8f9fa;
-                border: 2px solid #007bff;
-                border-radius: 10px;
-                padding: 15px;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                z-index: 1000;
-                text-align: center;
-                min-width: 150px;
-            ">
-                <h4 style="margin: 0 0 10px 0; color: #007bff;">Tiempo Restante</h4>
-                <div id="tiempo-display" style="font-size: 24px; font-weight: bold; color: #dc3545;">
-                    ${formatearTiempo(tiempoRestante)}
-                </div>
-                
-            </div>
-        `);
-        }
-
-        // Mostrar el contador
-        $("#contador-regresivo").show();
-
-        // Función para actualizar el contador
-        function actualizarContador() {
-            tiempoRestante--;
-
-            // Actualizar display
-            $("#tiempo-display").text(formatearTiempo(tiempoRestante));
-
-            // Cambiar color según el tiempo
-            if (tiempoRestante <= 60) {
-                $("#tiempo-display").css("color", "#dc3545"); // Rojo
-            } else if (tiempoRestante <= 120) {
-                $("#tiempo-display").css("color", "#ffc107"); // Amarillo
-            }
-
-            // Cuando el tiempo se acaba
-            if (tiempoRestante <= 0) {
-                clearInterval(intervalo);
-                $("#tiempo-display").text("00:00");
-
-                // Mostrar alerta
-                Toast.fire({
-                    icon: "warning",
-                    title: "¡Tiempo agotado! Envíe la prueba ahora.",
-                    position: "bottom-end"
-                });
-            }
-        }
-
-        // Iniciar el intervalo
-        intervalo = setInterval(actualizarContador, 1000);
 
 
-    }
 
-    // Función para formatear el tiempo (segundos a MM:SS)
-    function formatearTiempo(segundos) {
-        const minutos = Math.floor(segundos / 60);
-        const segundosRestantes = segundos % 60;
-        return `${minutos.toString().padStart(2, '0')}:${segundosRestantes.toString().padStart(2, '0')}`;
-    }
 
     $("#btn-buscar-placa").click(function(e) {
         e.preventDefault();
@@ -542,5 +478,41 @@
                 }
             });
         }
-    })
+    });
+
+    // Para cambios EN VIVO mientras el usuario escribe
+    $(document).on('keyup', '#opa1k, #opa2k, #opa3k, #opa4k', function() {
+        procesarValidacionOpacidad($(this));
+    });
+
+    // Para cuando el usuario SALE del campo (pierde foco) o cambia el valor
+    $(document).on('change', '#opa1k, #opa2k, #opa3k, #opa4k', function() {
+        procesarValidacionOpacidad($(this));
+    });
+
+    // Función centralizada para no repetir código
+    function procesarValidacionOpacidad($elemento) {
+        let veh_anio = parseInt(document.getElementById("veh_anio").value);
+        let cilindraje = parseInt(document.getElementById("veh_cilindraje").value);
+        const valor = $elemento.val();
+        const idCampo = $elemento.attr('id');
+
+        if (cilindraje < 5000) {
+            if (veh_anio >= 2016) {
+                validarRango(valor, 'opacidadmenor5000mayor2016', idCampo);
+            } else if (veh_anio > 2001 && veh_anio <= 2015) {
+                validarRango(valor, 'opacidadmenor5000entre2001y2015', idCampo);
+            } else {
+                validarRango(valor, 'opacidadmenor5000', idCampo);
+            }
+        } else {
+            if (veh_anio <= 2016) {
+                validarRango(valor, 'opacidadmayor5000mayor2016', idCampo);
+            } else if (veh_anio > 2001 && veh_anio <= 2015) {
+                validarRango(valor, 'opacidadmayor5000entre2001y2015', idCampo);
+            } else {
+                validarRango(valor, 'opacidadmayor5000', idCampo);
+            }
+        }
+    }
 </script>

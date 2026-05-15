@@ -303,6 +303,16 @@
             toast.onmouseleave = Swal.resumeTimer;
         }
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cargar el tiempo guardado en el input
+        const tiempoInput = document.getElementById('tiempoPrueba');
+        if (tiempoInput) {
+            const tiempoGuardado = getTiempoPrueba();
+            tiempoInput.value = tiempoGuardado;
+            // console.log(`📌 Vista: ${document.querySelector('.section-title h2')?.textContent}, Tiempo cargado: ${tiempoGuardado} minutos`);
+        }
+    });
     $(document).ready(function() {
         if (localStorage.getItem('motocarro') == '1') {
             $('#selMotocarro').val(localStorage.getItem('motocarro'));
@@ -332,89 +342,14 @@
 
     });
 
-    
-
-    // Configuración del tiempo (en segundos) - puedes modificar este valor
-    const TIEMPO_PRUEBA = 100; // 5 minutos = 300 segundos
-
-    // Función para iniciar el contador regresivo
-    function iniciarContadorRegresivo() {
-        let tiempoRestante = TIEMPO_PRUEBA;
-        let intervalo;
-
-        // Crear o actualizar el elemento del contador
-        let contadorElemento = $("#contador-regresivo");
-        if (contadorElemento.length === 0) {
-            $("body").append(`
-            <div id="contador-regresivo" style="
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #f8f9fa;
-                border: 2px solid #007bff;
-                border-radius: 10px;
-                padding: 15px;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                z-index: 1000;
-                text-align: center;
-                min-width: 150px;
-            ">
-                <h4 style="margin: 0 0 10px 0; color: #007bff;">Tiempo Restante</h4>
-                <div id="tiempo-display" style="font-size: 24px; font-weight: bold; color: #dc3545;">
-                    ${formatearTiempo(tiempoRestante)}
-                </div>
-                
-            </div>
-        `);
-        }
-
-        // Mostrar el contador
-        $("#contador-regresivo").show();
-
-        // Función para actualizar el contador
-        function actualizarContador() {
-            tiempoRestante--;
-
-            // Actualizar display
-            $("#tiempo-display").text(formatearTiempo(tiempoRestante));
-
-            // Cambiar color según el tiempo
-            if (tiempoRestante <= 60) {
-                $("#tiempo-display").css("color", "#dc3545"); // Rojo
-            } else if (tiempoRestante <= 120) {
-                $("#tiempo-display").css("color", "#ffc107"); // Amarillo
-            }
-
-            // Cuando el tiempo se acaba
-            if (tiempoRestante <= 0) {
-                clearInterval(intervalo);
-                $("#tiempo-display").text("00:00");
-
-                // Mostrar alerta
-                Toast.fire({
-                    icon: "warning",
-                    title: "¡Tiempo agotado! Envíe la prueba ahora.",
-                    position: "bottom-end"
-                });
-            }
-        }
-
-        // Iniciar el intervalo
-        intervalo = setInterval(actualizarContador, 1000);
 
 
-    }
 
-    // Función para formatear el tiempo (segundos a MM:SS)
-    function formatearTiempo(segundos) {
-        const minutos = Math.floor(segundos / 60);
-        const segundosRestantes = segundos % 60;
-        return `${minutos.toString().padStart(2, '0')}:${segundosRestantes.toString().padStart(2, '0')}`;
-    }
 
 
     $("#btn-buscar-placa").click(function(e) {
         e.preventDefault();
+        let veh_anio = parseInt(document.getElementById("veh_anio").value);
 
         if ($(".Vplaca").val() == "" || $(".Vplaca").val() == null) {
             Swal.fire({
@@ -453,26 +388,109 @@
                                     timeout: 100000
                                 });
                             }
-                            if (res.observacion == 'rpm_crucero')
+                            if (res.observacion == 'rpm_crucero') {
                                 $("#rpm_crucero").val(res.valor);
-                            if (res.observacion == 'hc_ralenti')
+
+                            }
+                            if (res.observacion == 'hc_ralenti') {
                                 $("#hc_ralenti").val(res.valor);
-                            if (res.observacion == 'co_crucero')
+                                if (veh_anio <= 1984) {
+                                    validarRango(res.valor, 'gaseselivianomenor1984', 'hc_ralenti');
+                                } else if (veh_anio > 1984 && veh_anio <= 1997) {
+                                    validarRango(res.valor, 'gaseselivianoentre1984y1997', 'hc_ralenti');
+                                } else if (veh_anio > 1997 && veh_anio <= 2009) {
+                                    validarRango(res.valor, 'gaseselivianoentre1997y2009', 'hc_ralenti');
+                                } else if (veh_anio > 2009) {
+                                    validarRango(res.valor, 'gaseseliviano2010', 'hc_ralenti');
+                                }
+                            }
+                            if (res.observacion == 'co_crucero') {
                                 $("#co_crucero").val(res.valor);
-                            if (res.observacion == 'co2_crucero')
+                                if (veh_anio <= 1984) {
+                                    validarRango(res.valor, 'gaseselivianomenor1984', 'co_crucero');
+                                } else if (veh_anio > 1984 && veh_anio <= 1997) {
+                                    validarRango(res.valor, 'gaseselivianoentre1984y1997', 'co_crucero');
+                                } else if (veh_anio > 1997 && veh_anio <= 2009) {
+                                    validarRango(res.valor, 'gaseselivianoentre1997y2009', 'co_crucero');
+                                } else if (veh_anio > 2009) {
+                                    validarRango(res.valor, 'gaseseliviano2010', 'co_crucero');
+                                }
+                            }
+                            if (res.observacion == 'co2_crucero') {
                                 $("#co2_crucero").val(res.valor);
-                            if (res.observacion == 'o2_crucero')
+                                if (veh_anio <= 1984) {
+                                    validarRango(res.valor, 'gaseselivianomenor1984', 'co2_crucero');
+                                } else if (veh_anio > 1984 && veh_anio <= 1997) {
+                                    validarRango(res.valor, 'gaseselivianoentre1984y1997', 'co2_crucero');
+                                } else if (veh_anio > 1997 && veh_anio <= 2009) {
+                                    validarRango(res.valor, 'gaseselivianoentre1997y2009', 'co2_crucero');
+                                } else if (veh_anio > 2009) {
+                                    validarRango(res.valor, 'gaseseliviano2010', 'co2_crucero');
+                                }
+                            }
+                            if (res.observacion == 'o2_crucero') {
                                 $("#o2_crucero").val(res.valor);
-                            if (res.observacion == 'rpm_ralenti')
+                                if (veh_anio <= 1984) {
+                                    validarRango(res.valor, 'gaseselivianomenor1984', 'o2_crucero');
+                                } else if (veh_anio > 1984 && veh_anio <= 1997) {
+                                    validarRango(res.valor, 'gaseselivianoentre1984y1997', 'o2_crucero');
+                                } else if (veh_anio > 1997 && veh_anio <= 2009) {
+                                    validarRango(res.valor, 'gaseselivianoentre1997y2009', 'o2_crucero');
+                                } else if (veh_anio > 2009) {
+                                    validarRango(res.valor, 'gaseseliviano2010', 'o2_crucero');
+                                }
+                            }
+                            if (res.observacion == 'rpm_ralenti') {
                                 $("#rpm_ralenti").val(res.valor);
-                            if (res.observacion == 'co_ralenti')
+                            }
+                            if (res.observacion == 'co_ralenti') {
                                 $("#co_ralenti").val(res.valor);
-                            if (res.observacion == 'co2_ralenti')
+                                if (veh_anio <= 1984) {
+                                    validarRango(res.valor, 'gaseselivianomenor1984', 'co_ralenti');
+                                } else if (veh_anio > 1984 && veh_anio <= 1997) {
+                                    validarRango(res.valor, 'gaseselivianoentre1984y1997', 'co_ralenti');
+                                } else if (veh_anio > 1997 && veh_anio <= 2009) {
+                                    validarRango(res.valor, 'gaseselivianoentre1997y2009', 'co_ralenti');
+                                } else if (veh_anio > 2009) {
+                                    validarRango(res.valor, 'gaseseliviano2010', 'co_ralenti');
+                                }
+                            }
+                            if (res.observacion == 'co2_ralenti') {
                                 $("#co2_ralenti").val(res.valor);
-                            if (res.observacion == 'o2_ralenti')
+                                if (veh_anio <= 1984) {
+                                    validarRango(res.valor, 'gaseselivianomenor1984', 'co2_ralenti');
+                                } else if (veh_anio > 1984 && veh_anio <= 1997) {
+                                    validarRango(res.valor, 'gaseselivianoentre1984y1997', 'co2_ralenti');
+                                } else if (veh_anio > 1997 && veh_anio <= 2009) {
+                                    validarRango(res.valor, 'gaseselivianoentre1997y2009', 'co2_ralenti');
+                                } else if (veh_anio > 2009) {
+                                    validarRango(res.valor, 'gaseseliviano2010', 'co2_ralenti');
+                                }
+                            }
+                            if (res.observacion == 'o2_ralenti') {
                                 $("#o2_ralenti").val(res.valor);
-                            if (res.observacion == 'hc_crucero')
+                                if (veh_anio <= 1984) {
+                                    validarRango(res.valor, 'gaseselivianomenor1984', 'o2_ralenti');
+                                } else if (veh_anio > 1984 && veh_anio <= 1997) {
+                                    validarRango(res.valor, 'gaseselivianoentre1984y1997', 'o2_ralenti');
+                                } else if (veh_anio > 1997 && veh_anio <= 2009) {
+                                    validarRango(res.valor, 'gaseselivianoentre1997y2009', 'o2_ralenti');
+                                } else if (veh_anio > 2009) {
+                                    validarRango(res.valor, 'gaseseliviano2010', 'o2_ralenti');
+                                }
+                            }
+                            if (res.observacion == 'hc_crucero') {
                                 $("#hc_crucero").val(res.valor);
+                                if (veh_anio <= 1984) {
+                                    validarRango(res.valor, 'gaseselivianomenor1984', 'hc_crucero');
+                                } else if (veh_anio > 1984 && veh_anio <= 1997) {
+                                    validarRango(res.valor, 'gaseselivianoentre1984y1997', 'hc_crucero');
+                                } else if (veh_anio > 1997 && veh_anio <= 2009) {
+                                    validarRango(res.valor, 'gaseselivianoentre1997y2009', 'hc_crucero');
+                                } else if (veh_anio > 2009) {
+                                    validarRango(res.valor, 'gaseseliviano2010', 'hc_crucero');
+                                }
+                            }
 
                         });
                     } else {
@@ -493,7 +511,23 @@
                 }
             });
         }
-    })
+    });
+
+    $(document).on('keyup', '#hc_ralenti, #hc_crucero, #co_crucero, #co2_crucero, #o2_crucero,#co_ralenti, #co2_ralenti, #o2_ralenti', function() {
+        let veh_anio = parseInt(document.getElementById("veh_anio").value);
+        const valor = $(this).val();
+        const idCampo = $(this).attr('id');
+        if (veh_anio <= 1984) {
+            validarRango(valor, 'gaseselivianomenor1984', idCampo);
+        } else if (veh_anio > 1984 && veh_anio <= 1997) {
+            validarRango(valor, 'gaseselivianoentre1984y1997', idCampo);
+        } else if (veh_anio > 1997 && veh_anio <= 2009) {
+            validarRango(valor, 'gaseselivianoentre1997y2009', idCampo);
+        } else if (veh_anio > 2009) {
+            validarRango(valor, 'gaseseliviano2010', idCampo);
+        }
+        // validarRango(valor, 'alineacion', idCampo);
+    });
 
     var getMaquina = function() {
         $.ajax({

@@ -120,6 +120,16 @@
         document.getElementById("btn-guardar").disabled = true; // Deshabilitar el botón al cargar la página
     });
 
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cargar el tiempo guardado en el input
+        const tiempoInput = document.getElementById('tiempoPrueba');
+        if (tiempoInput) {
+            const tiempoGuardado = getTiempoPrueba();
+            tiempoInput.value = tiempoGuardado;
+            // console.log(`📌 Vista: ${document.querySelector('.section-title h2')?.textContent}, Tiempo cargado: ${tiempoGuardado} minutos`);
+        }
+    });
+
     $(".selPlaca").change(function(e) {
         e.preventDefault();
         var placa = $('.selPlaca option:selected').attr('value');
@@ -131,138 +141,7 @@
 
 
     });
-    // $("#btn-evento").click(function(ev) {
-    //     ev.preventDefault();
-    //     document.getElementById("btn-evento").disabled = true;
-    //     if ($(".Vplaca").val() == null || $(".Vplaca").val() == "") {
-    //         Toast.fire({
-    //             icon: "error",
-    //             title: "Seleccione una placa",
-    //             position: "bottom-end"
-    //         });
-    //         document.getElementById("btn-evento").disabled = false;
-    //     } else {
-    //         Toast.fire({
-    //             icon: "info",
-    //             title: "Creando evento...",
-    //             timeout: 1000,
-    //             position: "bottom-end"
-    //         });
-    //         $.ajax({
-    //             url: 'getevento/',
-    //             type: 'post',
-    //             dataType: 'json',
-    //             data: {
-    //                 placa: $(".Vplaca").val(),
-    //                 prueba: 'Suspension',
-    //                 tipoprueba: '9',
-    //                 tipovehiculo: '1',
-    //                 tipoevento: '1',
-    //                 _token: $("input[name='_token']").val()
-    //             },
-    //             success: function(data, textStatus, jqXHR) {
-    //                 Swal.close();
-    //                 document.getElementById("btn-evento").disabled = false;
-    //                 document.getElementById("btn-guardar").disabled = false;
-    //                 Toast.fire({
-    //                     icon: "success",
-    //                     title: "Evento creado, tenga en cuenta el tiempo de duracion de la prueba, para enviar los datos.",
-    //                     timeout: 1000,
-    //                     position: "bottom-end"
-    //                 });
-
-    //                 // Luego mostrar el toast con un pequeño delay
-    //                 iniciarContadorRegresivo();
-
-    //             },
-    //             error: function(jqXHR, textStatus, errorThrown) {
-    //                 console.log('error')
-    //                 console.log(jqXHR.responseText)
-    //                 console.log(textStatus)
-    //                 console.log(errorThrown)
-    //             }
-    //         });
-    //     }
-
-    // });
-
-    // Configuración del tiempo (en segundos) - puedes modificar este valor
-    const TIEMPO_PRUEBA = 60; // 5 minutos = 300 segundos
-
-    // Función para iniciar el contador regresivo
-    function iniciarContadorRegresivo() {
-        let tiempoRestante = TIEMPO_PRUEBA;
-        let intervalo;
-
-        // Crear o actualizar el elemento del contador
-        let contadorElemento = $("#contador-regresivo");
-        if (contadorElemento.length === 0) {
-            $("body").append(`
-            <div id="contador-regresivo" style="
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #f8f9fa;
-                border: 2px solid #007bff;
-                border-radius: 10px;
-                padding: 15px;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                z-index: 1000;
-                text-align: center;
-                min-width: 150px;
-            ">
-                <h4 style="margin: 0 0 10px 0; color: #007bff;">Tiempo Restante</h4>
-                <div id="tiempo-display" style="font-size: 24px; font-weight: bold; color: #dc3545;">
-                    ${formatearTiempo(tiempoRestante)}
-                </div>
-                
-            </div>
-        `);
-        }
-
-        // Mostrar el contador
-        $("#contador-regresivo").show();
-
-        // Función para actualizar el contador
-        function actualizarContador() {
-            tiempoRestante--;
-
-            // Actualizar display
-            $("#tiempo-display").text(formatearTiempo(tiempoRestante));
-
-            // Cambiar color según el tiempo
-            if (tiempoRestante <= 60) {
-                $("#tiempo-display").css("color", "#dc3545"); // Rojo
-            } else if (tiempoRestante <= 120) {
-                $("#tiempo-display").css("color", "#ffc107"); // Amarillo
-            }
-
-            // Cuando el tiempo se acaba
-            if (tiempoRestante <= 0) {
-                clearInterval(intervalo);
-                $("#tiempo-display").text("00:00");
-
-                // Mostrar alerta
-                Toast.fire({
-                    icon: "warning",
-                    title: "¡Tiempo agotado! Envíe la prueba ahora.",
-                    position: "bottom-end"
-                });
-            }
-        }
-
-        // Iniciar el intervalo
-        intervalo = setInterval(actualizarContador, 1000);
-
-
-    }
-
-    // Función para formatear el tiempo (segundos a MM:SS)
-    function formatearTiempo(segundos) {
-        const minutos = Math.floor(segundos / 60);
-        const segundosRestantes = segundos % 60;
-        return `${minutos.toString().padStart(2, '0')}:${segundosRestantes.toString().padStart(2, '0')}`;
-    }
+    
 
     $("#btn-buscar-placa").click(function(e) {
         e.preventDefault();
@@ -304,17 +183,26 @@
                                 });
                             }
                             if (res.observacion == 'Suspensión delantera derecha' || res
-                                .observacion == 'Suspension delantera derecha')
+                                .observacion == 'Suspension delantera derecha') {
                                 $("#eje1d").val(res.valor);
+                                validarRango(res.valor, 'suspension', 'eje1d');
+
+                            }
                             if (res.observacion == 'Suspensión delantera izquierda' || res
-                                .observacion == 'Suspension delantera izquierda')
+                                .observacion == 'Suspension delantera izquierda') {
                                 $("#eje1i").val(res.valor);
+                                validarRango(res.valor, 'suspension', 'eje1i');
+                            }
                             if (res.observacion == 'Suspension trasera derecha' || res
-                                .observacion == 'Suspension trasera derecha')
+                                .observacion == 'Suspension trasera derecha') {
                                 $("#eje2d").val(res.valor);
+                                validarRango(res.valor, 'suspension', 'eje2d');
+                            }
                             if (res.observacion == 'Suspensión trasera izquierda' || res
-                                .observacion == 'Suspension trasera izquierda')
+                                .observacion == 'Suspension trasera izquierda') {
                                 $("#eje2i").val(res.valor);
+                                validarRango(res.valor, 'suspension', 'eje2i');
+                            }
 
                         });
                     } else {
@@ -335,5 +223,11 @@
                 }
             });
         }
-    })
+    });
+
+    $(document).on('keyup', '#eje1d, #eje1i, #eje2d, #eje2i', function() {
+        const valor = $(this).val();
+        const idCampo = $(this).attr('id');
+        validarRango(valor, 'suspension', idCampo);
+    });
 </script>
