@@ -65,6 +65,7 @@ Route::post('/consultarImagen', [Cfotos::class, 'consultarImagen']);
 Route::post('/getevento', [Cprincipal::class, 'eventosindra']);
 Route::post('/getlineas', [Cprincipal::class, 'getlineas']);
 Route::get('/getmac', [Clogin::class, 'getMac']);
+// Route::get('index.php/getSession', [Clogin::class, 'getSession']);
 Route::get('/getSession', [Clogin::class, 'getSession']);
 Route::post('/getDefectos', [Cvisual::class, 'getDefectos']);
 Route::post('/updateObservacion', [Cvisual::class, 'updateObservacion']);
